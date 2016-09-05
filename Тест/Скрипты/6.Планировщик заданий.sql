@@ -1,6 +1,6 @@
----------------Ïëàíèðîâùèê çàäàíèÿ---------------
+---------------ÐŸÐ»Ð°Ð½Ð¸Ñ€Ð¾Ð²Ñ‰Ð¸Ðº Ð·Ð°Ð´Ð°Ð½Ð¸Ñ---------------
 
----------------Ñîçäàíèå ïðîãðàììû---------------
+---------------Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð¿Ñ€Ð¾Ð³Ñ€Ð°Ð¼Ð¼Ñ‹---------------
 BEGIN
 DBMS_SCHEDULER.CREATE_PROGRAM
 ( 
@@ -9,7 +9,7 @@ DBMS_SCHEDULER.CREATE_PROGRAM
     ,number_of_arguments => 4 
     ,enabled             => FALSE--TRUE
 );
---×èñëî ñîáûòèé äëÿ îäíîãî îáðàáîò÷èêà
+--Ð§Ð¸ÑÐ»Ð¾ ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ð¹ Ð´Ð»Ñ Ð¾Ð´Ð½Ð¾Ð³Ð¾ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚Ñ‡Ð¸ÐºÐ°
 DBMS_SCHEDULER.DEFINE_PROGRAM_ARGUMENT
 ( program_name      => 'AQ_PROGRAM_START'
 , argument_position => 1
@@ -17,7 +17,7 @@ DBMS_SCHEDULER.DEFINE_PROGRAM_ARGUMENT
 , argument_type     => 'NUMBER'
 , default_value     => 15
 ) ;
---Ëèìèò äëÿ ãåíåðàöèè íîâîãî ñîáûòèÿ ïðåäóïðåæäåíèÿ
+--Ð›Ð¸Ð¼Ð¸Ñ‚ Ð´Ð»Ñ Ð³ÐµÐ½ÐµÑ€Ð°Ñ†Ð¸Ð¸ Ð½Ð¾Ð²Ð¾Ð³Ð¾ ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ñ Ð¿Ñ€ÐµÐ´ÑƒÐ¿Ñ€ÐµÐ¶Ð´ÐµÐ½Ð¸Ñ
 DBMS_SCHEDULER.DEFINE_PROGRAM_ARGUMENT 
 ( program_name      => 'AQ_PROGRAM_START'
 , argument_position => 2
@@ -25,7 +25,7 @@ DBMS_SCHEDULER.DEFINE_PROGRAM_ARGUMENT
 , argument_type     => 'NUMBER'
 , default_value     => 10
 ) ;
---Ýëåêòðîííàÿ ïî÷òà îòðïàâèòåëÿ
+--Ð­Ð»ÐµÐºÑ‚Ñ€Ð¾Ð½Ð½Ð°Ñ Ð¿Ð¾Ñ‡Ñ‚Ð° Ð¾Ñ‚Ñ€Ð¿Ð°Ð²Ð¸Ñ‚ÐµÐ»Ñ
 DBMS_SCHEDULER.DEFINE_PROGRAM_ARGUMENT
 ( program_name      => 'AQ_PROGRAM_START'
 , argument_position => 3
@@ -33,7 +33,7 @@ DBMS_SCHEDULER.DEFINE_PROGRAM_ARGUMENT
 , argument_type     => 'VARCHAR2'
 , default_value     => NULL
 ) ;
---Ýëåêòðîííàÿ ïî÷òà ïîëó÷àòåëÿ
+--Ð­Ð»ÐµÐºÑ‚Ñ€Ð¾Ð½Ð½Ð°Ñ Ð¿Ð¾Ñ‡Ñ‚Ð° Ð¿Ð¾Ð»ÑƒÑ‡Ð°Ñ‚ÐµÐ»Ñ
 DBMS_SCHEDULER.DEFINE_PROGRAM_ARGUMENT
 ( program_name      => 'AQ_PROGRAM_START'
 , argument_position => 4
@@ -45,7 +45,7 @@ DBMS_SCHEDULER.DEFINE_PROGRAM_ARGUMENT
 DBMS_SCHEDULER.ENABLE ( 'AQ_PROGRAM_START' );
 END;
 /
----------------Ñîçäàíèå ðàñïèñàíèÿ---------------
+---------------Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ñ€Ð°ÑÐ¿Ð¸ÑÐ°Ð½Ð¸Ñ---------------
 BEGIN
 DBMS_SCHEDULER.CREATE_SCHEDULE
 ( schedule_name   => 'AQ_SCHEDULE'
@@ -54,7 +54,7 @@ DBMS_SCHEDULER.CREATE_SCHEDULE
 ) ;
 END;
 /
----------------Ñîçäàíèå çàäàíèÿ---------------
+---------------Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð·Ð°Ð´Ð°Ð½Ð¸Ñ---------------
 BEGIN
 DBMS_SCHEDULER.CREATE_JOB
 ( job_name      => 'AQ_JOB'
@@ -73,4 +73,3 @@ BEGIN
 DBMS_SCHEDULER.DISABLE ( 'AQ_JOB' );
 END;
 */
-
