@@ -1,12 +1,13 @@
---Создание пользователя
+--РЎРѕР·РґР°РЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 CREATE USER aq_user IDENTIFIED BY 12345; 
----------------Предоставление необходимых прав:-------------------
+---------------РџСЂРµРґРѕСЃС‚Р°РІР»РµРЅРёРµ РЅРµРѕР±С…РѕРґРёРјС‹С… РїСЂР°РІ:-------------------
 GRANT DBA, CREATE ANY TYPE TO aq_user;
 GRANT EXECUTE ON DBMS_AQ TO aq_user;
 GRANT EXECUTE ON DBMS_AQADM TO aq_user;
 GRANT EXECUTE ON DBMS_SCHEDULER TO aq_user;
+GRANT EXECUTE ON Dbms_Lock TO AQ_USER
 GRANT AQ_ADMINISTRATOR_ROLE TO aq_user; 
---Привилегии для chain
+--РџСЂРёРІРёР»РµРіРёРё РґР»СЏ chain
 GRANT SCHEDULER_ADMIN TO AQ_USER;
 GRANT CREATE JOB TO AQ_USER;
 GRANT MANAGE SCHEDULER TO AQ_USER;
