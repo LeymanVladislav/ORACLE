@@ -1,4 +1,4 @@
----------------Создание таблицы для событий с типом - Подтверждение---------------
+---------------РЎРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ РґР»СЏ СЃРѕР±С‹С‚РёР№ СЃ С‚РёРїРѕРј - РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ---------------
 CREATE SEQUENCE AQ_CONFIRM_SEQ
 START WITH     1
 INCREMENT BY   1
@@ -6,13 +6,13 @@ INCREMENT BY   1
 CREATE TABLE AQ_CONFIRM
 (
        ID INTEGER PRIMARY KEY,
-       TP VARCHAR2(32), --Тип события
-       DTIME date, --Время события
-       DURATION NUMBER, --Длительность, в секундах
-       TEXT VARCHAR2(255) --Описание события 
+       TP VARCHAR2(32), --РўРёРї СЃРѕР±С‹С‚РёСЏ
+       DTIME date, --Р’СЂРµРјСЏ СЃРѕР±С‹С‚РёСЏ
+       DURATION NUMBER, --Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ, РІ СЃРµРєСѓРЅРґР°С…
+       TEXT VARCHAR2(255) --РћРїРёСЃР°РЅРёРµ СЃРѕР±С‹С‚РёСЏ 
 )
 /
----------------Создание таблицы для событий с типом - Предупреждение---------------
+---------------РЎРѕР·РґР°РЅРёРµ С‚Р°Р±Р»РёС†С‹ РґР»СЏ СЃРѕР±С‹С‚РёР№ СЃ С‚РёРїРѕРј - РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ---------------
 CREATE SEQUENCE AQ_WARN_SEQ
 START WITH     1
 INCREMENT BY   1
@@ -20,21 +20,21 @@ INCREMENT BY   1
 CREATE TABLE AQ_WARN
 (
        ID INTEGER PRIMARY KEY,
-       TP VARCHAR2(32), --Тип события
-       DTIME date, --Время события
-       DURATION NUMBER, --Длительность, в секундах
-       TEXT VARCHAR2(255) --Описание события 
+       TP VARCHAR2(32), --РўРёРї СЃРѕР±С‹С‚РёСЏ
+       DTIME date, --Р’СЂРµРјСЏ СЃРѕР±С‹С‚РёСЏ
+       DURATION NUMBER, --Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ, РІ СЃРµРєСѓРЅРґР°С…
+       TEXT VARCHAR2(255) --РћРїРёСЃР°РЅРёРµ СЃРѕР±С‹С‚РёСЏ 
 )
 /
----------------Создание процедуры для обработки событий---------------
+---------------РЎРѕР·РґР°РЅРёРµ РїСЂРѕС†РµРґСѓСЂС‹ РґР»СЏ РѕР±СЂР°Р±РѕС‚РєРё СЃРѕР±С‹С‚РёР№---------------
 CREATE OR REPLACE PROCEDURE AQ_DEQUEUE (
-                                        SUBS         VARCHAR2,             --Имя подписчика
-                                        RN_START     NUMBER,               --ID первой строки
-                                        RN_END       NUMBER,               --ID последней строки
-                                        N            NUMBER,               --Лимит для генерации нового события предупреждения
-                                        v_sender     VARCHAR2 DEFAULT NULL, --Электронная почта отрпавителя
-                                        v_recipients VARCHAR2 DEFAULT NULL, --Электронная почта получателя
-                                        TEXT         VARCHAR2 DEFAULT NULL --Комментарий                                       
+                                        SUBS         VARCHAR2,             --РРјСЏ РїРѕРґРїРёСЃС‡РёРєР°
+                                        RN_START     NUMBER,               --ID РїРµСЂРІРѕР№ СЃС‚СЂРѕРєРё
+                                        RN_END       NUMBER,               --ID РїРѕСЃР»РµРґРЅРµР№ СЃС‚СЂРѕРєРё
+                                        N            NUMBER,               --Р›РёРјРёС‚ РґР»СЏ РіРµРЅРµСЂР°С†РёРё РЅРѕРІРѕРіРѕ СЃРѕР±С‹С‚РёСЏ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ
+                                        v_sender     VARCHAR2 DEFAULT NULL, --Р­Р»РµРєС‚СЂРѕРЅРЅР°СЏ РїРѕС‡С‚Р° РѕС‚СЂРїР°РІРёС‚РµР»СЏ
+                                        v_recipients VARCHAR2 DEFAULT NULL, --Р­Р»РµРєС‚СЂРѕРЅРЅР°СЏ РїРѕС‡С‚Р° РїРѕР»СѓС‡Р°С‚РµР»СЏ
+                                        TEXT         VARCHAR2 DEFAULT NULL --РљРѕРјРјРµРЅС‚Р°СЂРёР№                                       
                                         )
 AS
 deq_options     DBMS_AQ.dequeue_options_t;
@@ -51,11 +51,11 @@ BEGIN
             ORDER BY t.user_data.id ASC       
            )
    LOOP        
-       --deq_options.dequeue_mode :=  DBMS_AQ.BROWSE -- не удалять сообщения из очереди (по умолчанию DBMS_AQ.REMOVE)
+       --deq_options.dequeue_mode :=  DBMS_AQ.BROWSE -- РЅРµ СѓРґР°Р»СЏС‚СЊ СЃРѕРѕР±С‰РµРЅРёСЏ РёР· РѕС‡РµСЂРµРґРё (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ DBMS_AQ.REMOVE)
        --deq_options.navigation := DBMS_AQ.FIRST_MESSAGE;
        deq_options.msgid := i.msgid;
        deq_options.consumer_name := SUBS;
-       deq_options.wait := DBMS_AQ.NO_WAIT; --параметр ожидания события, можно указать в секундах
+       deq_options.wait := DBMS_AQ.NO_WAIT; --РїР°СЂР°РјРµС‚СЂ РѕР¶РёРґР°РЅРёСЏ СЃРѕР±С‹С‚РёСЏ, РјРѕР¶РЅРѕ СѓРєР°Р·Р°С‚СЊ РІ СЃРµРєСѓРЅРґР°С…
        DBMS_AQ.DEQUEUE(
           queue_name          =>     'queue_1',
           dequeue_options     =>     deq_options,
@@ -67,7 +67,7 @@ BEGIN
        DBMS_OUTPUT.PUT_LINE('dtime: '|| evnt.dtime);
        DBMS_OUTPUT.PUT_LINE('DURATION: '|| evnt.DURATION);   
        DBMS_OUTPUT.PUT_LINE('TEXT: '|| evnt.TEXT);
-       IF evnt.tp = 'Уведомление' AND evnt.DURATION > N THEN --Уведомление – если длительность больше N cекунд, то генерировать событие предупреждения для дальнейшей обработки. 
+       IF evnt.tp = 'РЈРІРµРґРѕРјР»РµРЅРёРµ' AND evnt.DURATION > N THEN --РЈРІРµРґРѕРјР»РµРЅРёРµ вЂ“ РµСЃР»Рё РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ Р±РѕР»СЊС€Рµ N cРµРєСѓРЅРґ, С‚Рѕ РіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ СЃРѕР±С‹С‚РёРµ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ РґР»СЏ РґР°Р»СЊРЅРµР№С€РµР№ РѕР±СЂР°Р±РѕС‚РєРё. 
           RES := AQ_ENQUEUE(
                             ATT => AQ_ENQUEUE_F_TYPE(
                                                       TP => 3,
@@ -76,16 +76,16 @@ BEGIN
                                                       TEXT => evnt.TEXT
                                                      )
                            );                           
-          DBMS_OUTPUT.PUT_LINE('Создание сообщения с типом - Предупреждение'); 
-       ELSIF evnt.tp = 'Подтверждение' THEN  --Подтверждение – складывать в отдельную таблицу.  
+          DBMS_OUTPUT.PUT_LINE('РЎРѕР·РґР°РЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ СЃ С‚РёРїРѕРј - РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ'); 
+       ELSIF evnt.tp = 'РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ' THEN  --РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ вЂ“ СЃРєР»Р°РґС‹РІР°С‚СЊ РІ РѕС‚РґРµР»СЊРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ.  
           INSERT INTO AQ_CONFIRM VALUES (
                                          AQ_CONFIRM_SEQ.NEXTVAL,
-                                         evnt.tp,       --Тип события
-                                         evnt.dtime,    --Время события
-                                         evnt.DURATION, --Длительность, в секундах
-                                         evnt.TEXT      --Описание события 
+                                         evnt.tp,       --РўРёРї СЃРѕР±С‹С‚РёСЏ
+                                         evnt.dtime,    --Р’СЂРµРјСЏ СЃРѕР±С‹С‚РёСЏ
+                                         evnt.DURATION, --Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ, РІ СЃРµРєСѓРЅРґР°С…
+                                         evnt.TEXT      --РћРїРёСЃР°РЅРёРµ СЃРѕР±С‹С‚РёСЏ 
                                          );
-          IF evnt.DURATION > N THEN --если длительность больше N cекунд, то генерировать событие предупреждения для дальнейшей обработки.
+          IF evnt.DURATION > N THEN --РµСЃР»Рё РґР»РёС‚РµР»СЊРЅРѕСЃС‚СЊ Р±РѕР»СЊС€Рµ N cРµРєСѓРЅРґ, С‚Рѕ РіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ СЃРѕР±С‹С‚РёРµ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ РґР»СЏ РґР°Р»СЊРЅРµР№С€РµР№ РѕР±СЂР°Р±РѕС‚РєРё.
              RES := AQ_ENQUEUE(
                                ATT => AQ_ENQUEUE_F_TYPE(
                                                          TP => 3,
@@ -94,30 +94,30 @@ BEGIN
                                                          TEXT => evnt.TEXT
                                                         )
                                );                           
-             DBMS_OUTPUT.PUT_LINE('Создание сообщения с типом - Предупреждение'); 
+             DBMS_OUTPUT.PUT_LINE('РЎРѕР·РґР°РЅРёРµ СЃРѕРѕР±С‰РµРЅРёСЏ СЃ С‚РёРїРѕРј - РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ'); 
           END IF; 
-       ELSIF evnt.tp = 'Предупреждение' THEN  --Предупреждение  - складывать в отдельную таблицу (бонус – отправлять email, заголовок и тело письма должно содержать информацию о событии)                                     
+       ELSIF evnt.tp = 'РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ' THEN  --РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ  - СЃРєР»Р°РґС‹РІР°С‚СЊ РІ РѕС‚РґРµР»СЊРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ (Р±РѕРЅСѓСЃ вЂ“ РѕС‚РїСЂР°РІР»СЏС‚СЊ email, Р·Р°РіРѕР»РѕРІРѕРє Рё С‚РµР»Рѕ РїРёСЃСЊРјР° РґРѕР»Р¶РЅРѕ СЃРѕРґРµСЂР¶Р°С‚СЊ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ СЃРѕР±С‹С‚РёРё)                                     
           INSERT INTO AQ_WARN VALUES (
                                        AQ_WARN_SEQ.NEXTVAL,
-                                       evnt.tp,       --Тип события
-                                       evnt.dtime,    --Время события
-                                       evnt.DURATION, --Длительность, в секундах
-                                       evnt.TEXT      --Описание события 
+                                       evnt.tp,       --РўРёРї СЃРѕР±С‹С‚РёСЏ
+                                       evnt.dtime,    --Р’СЂРµРјСЏ СЃРѕР±С‹С‚РёСЏ
+                                       evnt.DURATION, --Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ, РІ СЃРµРєСѓРЅРґР°С…
+                                       evnt.TEXT      --РћРїРёСЃР°РЅРёРµ СЃРѕР±С‹С‚РёСЏ 
                                       );  
-        --Отправка E-Mail 
+        --РћС‚РїСЂР°РІРєР° E-Mail 
         IF v_sender IS NOT NULL AND v_recipients IS NOT NULL THEN
             NULL;
             /*UTL_MAIL.send(
                           sender     => v_sender,
                           recipients => v_recipients,
-                          subject    => '[AQ] Событие с типом - Предупреждение',
-                          message    => '<p>Уведомление о событии с типом - Предупреждение/</p><p>Время события: '||evnt.dtime||'</p><p>Длительность: '||evnt.DURATION||'сек.</p><p>Описание события: '||evnt.TEXT||'</p>',
-                          mime_type  => 'text/html; charset=«UTF-8»'--'text; charset=us-ascii'
+                          subject    => '[AQ] РЎРѕР±С‹С‚РёРµ СЃ С‚РёРїРѕРј - РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ',
+                          message    => '<p>РЈРІРµРґРѕРјР»РµРЅРёРµ Рѕ СЃРѕР±С‹С‚РёРё СЃ С‚РёРїРѕРј - РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ/</p><p>Р’СЂРµРјСЏ СЃРѕР±С‹С‚РёСЏ: '||evnt.dtime||'</p><p>Р”Р»РёС‚РµР»СЊРЅРѕСЃС‚СЊ: '||evnt.DURATION||'СЃРµРє.</p><p>РћРїРёСЃР°РЅРёРµ СЃРѕР±С‹С‚РёСЏ: '||evnt.TEXT||'</p>',
+                          mime_type  => 'text/html; charset=В«UTF-8В»'--'text; charset=us-ascii'
                          );  */
         END IF;                          
        END IF;
        COMMIT;
-   --SYS.DBMS_LOCK.Sleep(20); Для тестирования с нагрузкой   
+   --SYS.DBMS_LOCK.Sleep(20); Р”Р»СЏ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ СЃ РЅР°РіСЂСѓР·РєРѕР№   
    END LOOP;
 EXCEPTION 
    WHEN OTHERS
