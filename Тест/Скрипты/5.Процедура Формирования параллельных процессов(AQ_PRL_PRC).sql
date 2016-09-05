@@ -1,21 +1,21 @@
----------------Процедура Формирования параллельных процессов---------------
+---------------РџСЂРѕС†РµРґСѓСЂР° Р¤РѕСЂРјРёСЂРѕРІР°РЅРёСЏ РїР°СЂР°Р»Р»РµР»СЊРЅС‹С… РїСЂРѕС†РµСЃСЃРѕРІ---------------
 CREATE OR REPLACE PROCEDURE AQ_PRL_PRC
                             (
-                             N_TRSHLD     NUMBER,                --Число событий для одного обработчика
-                             N            NUMBER,                 --Лимит для генерации нового события предупреждения
-                             v_sender     VARCHAR2 DEFAULT NULL, --Электронная почта отрпавителя
-                             v_recipients VARCHAR2 DEFAULT NULL, --Электронная почта получателя
-                             TEXT         VARCHAR2 DEFAULT NULL  --Комментарий                                 
+                             N_TRSHLD     NUMBER,                --Р§РёСЃР»Рѕ СЃРѕР±С‹С‚РёР№ РґР»СЏ РѕРґРЅРѕРіРѕ РѕР±СЂР°Р±РѕС‚С‡РёРєР°
+                             N            NUMBER,                 --Р›РёРјРёС‚ РґР»СЏ РіРµРЅРµСЂР°С†РёРё РЅРѕРІРѕРіРѕ СЃРѕР±С‹С‚РёСЏ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ
+                             v_sender     VARCHAR2 DEFAULT NULL, --Р­Р»РµРєС‚СЂРѕРЅРЅР°СЏ РїРѕС‡С‚Р° РѕС‚СЂРїР°РІРёС‚РµР»СЏ
+                             v_recipients VARCHAR2 DEFAULT NULL, --Р­Р»РµРєС‚СЂРѕРЅРЅР°СЏ РїРѕС‡С‚Р° РїРѕР»СѓС‡Р°С‚РµР»СЏ
+                             TEXT         VARCHAR2 DEFAULT NULL  --РљРѕРјРјРµРЅС‚Р°СЂРёР№                                 
                             )
 AS
-N_NTF        NUMBER;         --Число событий в очереди
-N_STEP       NUMBER;         --Число параллельных обработчиков
+N_NTF        NUMBER;         --Р§РёСЃР»Рѕ СЃРѕР±С‹С‚РёР№ РІ РѕС‡РµСЂРµРґРё
+N_STEP       NUMBER;         --Р§РёСЃР»Рѕ РїР°СЂР°Р»Р»РµР»СЊРЅС‹С… РѕР±СЂР°Р±РѕС‚С‡РёРєРѕРІ
 RL_ACTION    VARCHAR2(20000);
 RL_CONDITION VARCHAR2(20000);
 RN_START     NUMBER;
 RN_END       NUMBER;
 BEGIN
-     --Удаление ранее созданой цепочки AQ_CHAIN
+     --РЈРґР°Р»РµРЅРёРµ СЂР°РЅРµРµ СЃРѕР·РґР°РЅРѕР№ С†РµРїРѕС‡РєРё AQ_CHAIN
      FOR c IN (
                SELECT t.CHAIN_NAME
                FROM user_scheduler_chains t
@@ -27,7 +27,7 @@ BEGIN
                  chain_name => C.CHAIN_NAME
                 );
      END LOOP;          
-     --Удаление ранее созданных программ
+     --РЈРґР°Р»РµРЅРёРµ СЂР°РЅРµРµ СЃРѕР·РґР°РЅРЅС‹С… РїСЂРѕРіСЂР°РјРј
      FOR p IN (
                SELECT program_name
                FROM user_scheduler_programs p
@@ -37,23 +37,23 @@ BEGIN
      LOOP
        sys.dbms_scheduler.drop_program(program_name => p.program_name);
      END LOOP;   
-     --Определение количества событий
+     --РћРїСЂРµРґРµР»РµРЅРёРµ РєРѕР»РёС‡РµСЃС‚РІР° СЃРѕР±С‹С‚РёР№
      SELECT GREATEST(COUNT(*),MAX(t.user_data.id)) INTO N_NTF
      FROM AQ_TAB t;
      IF N_NTF>0 THEN    
-         --Расчет необходимого количества обработчиков N_STEP
+         --Р Р°СЃС‡РµС‚ РЅРµРѕР±С…РѕРґРёРјРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° РѕР±СЂР°Р±РѕС‚С‡РёРєРѕРІ N_STEP
          N_STEP := CEIL(N_NTF/N_TRSHLD);                         
-         --Создание цепочки AQ_CHAIN
+         --РЎРѕР·РґР°РЅРёРµ С†РµРїРѕС‡РєРё AQ_CHAIN
          sys.dbms_scheduler.create_chain
                 (
                  chain_name => 'AQ_CHAIN'
                 );
-         --Создание программ и шагов цепочки для scheduler
+         --РЎРѕР·РґР°РЅРёРµ РїСЂРѕРіСЂР°РјРј Рё С€Р°РіРѕРІ С†РµРїРѕС‡РєРё РґР»СЏ scheduler
          FOR i IN 1..N_STEP
            LOOP
              RN_START := (i-1)*N_TRSHLD + 1;
              RN_END := i*N_TRSHLD;       
-             --Создание новой программы обработчика
+             --РЎРѕР·РґР°РЅРёРµ РЅРѕРІРѕР№ РїСЂРѕРіСЂР°РјРјС‹ РѕР±СЂР°Р±РѕС‚С‡РёРєР°
              sys.dbms_scheduler.create_program
                     (
                      program_name => 'AQ_PROGRAM_'||i,
@@ -61,7 +61,7 @@ BEGIN
                      program_action => 'AQ_DEQUEUE(''SUBS_1'','||RN_START||','||RN_END||','||N||',''AQ_PROGRAM_'||i||''','''||v_sender||''','''||v_recipients||''');',
                      enabled => TRUE  
                     );                
-             --Создание шагов цепочки AQ_CHAIN
+             --РЎРѕР·РґР°РЅРёРµ С€Р°РіРѕРІ С†РµРїРѕС‡РєРё AQ_CHAIN
              sys.dbms_scheduler.define_chain_step
                     (
                      chain_name => 'AQ_CHAIN',
@@ -76,7 +76,7 @@ BEGIN
                RL_CONDITION := RL_CONDITION||' AND AQ_PROGRAM_STEP_'||i||' COMPLETED'; 
              END IF;            
            END LOOP;
-          --Создание правил для цепочки, для параллельного запуска шагов
+          --РЎРѕР·РґР°РЅРёРµ РїСЂР°РІРёР» РґР»СЏ С†РµРїРѕС‡РєРё, РґР»СЏ РїР°СЂР°Р»Р»РµР»СЊРЅРѕРіРѕ Р·Р°РїСѓСЃРєР° С€Р°РіРѕРІ
           sys.dbms_scheduler.define_chain_rule
                   (
                    chain_name => 'AQ_CHAIN',
@@ -84,7 +84,7 @@ BEGIN
                    action => RL_ACTION,
                    rule_name => 'AQ_R_START'
                   );
-          --Создание завершающего правила
+          --РЎРѕР·РґР°РЅРёРµ Р·Р°РІРµСЂС€Р°СЋС‰РµРіРѕ РїСЂР°РІРёР»Р°
           sys.dbms_scheduler.define_chain_rule
                   (
                    chain_name => 'AQ_CHAIN',
@@ -92,9 +92,9 @@ BEGIN
                    action => 'END',
                    rule_name => 'AQ_R_FINAL'
                   );
-          --Активация цепочки AQ_CHAIN
+          --РђРєС‚РёРІР°С†РёСЏ С†РµРїРѕС‡РєРё AQ_CHAIN
           sys.dbms_scheduler.enable('AQ_CHAIN'); 
-          --Запуск цепочки
+          --Р—Р°РїСѓСЃРє С†РµРїРѕС‡РєРё
           sys.dbms_scheduler.run_chain('AQ_CHAIN', '','AQ_CHAIN_JOB');            
      END IF;
 END;
