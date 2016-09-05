@@ -1,42 +1,42 @@
 CREATE OR REPLACE PROCEDURE AQ_DIAG
                               ( 
-                                INTRVL    NUMBER --Интервал запуска JOB sec
+                                INTRVL    NUMBER --РРЅС‚РµСЂРІР°Р» Р·Р°РїСѓСЃРєР° JOB sec
                               ) 
 AS                                                        
 RES           VARCHAR2(30);
 N_TST         NUMBER;
 ID            NUMBER;   
-N             NUMBER;         ----Лимит для генерации нового события предупреждения
+N             NUMBER;         ----Р›РёРјРёС‚ РґР»СЏ РіРµРЅРµСЂР°С†РёРё РЅРѕРІРѕРіРѕ СЃРѕР±С‹С‚РёСЏ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёСЏ
 CNT           VARCHAR2(10);
-AQ_JOB_ST     VARCHAR2(10);   --Состояние AQ_JOB
-FAIL_LST_HR   NUMBER;         --Количество ошибок за последний час
-N_TRSHLD      NUMBER;         --Число событий для одного обработчика
-N_NTF         NUMBER;         --Число событий в очереди
-N_STEP        NUMBER;         --Число параллельных обработчиков
-AQ_PRL_PRC_ST VARCHAR(30);    --Результат выполнения процдуры  
-PRG_CNT       NUMBER;         --Количество программ созданных AQ_PRL_PRC
+AQ_JOB_ST     VARCHAR2(10);   --РЎРѕСЃС‚РѕСЏРЅРёРµ AQ_JOB
+FAIL_LST_HR   NUMBER;         --РљРѕР»РёС‡РµСЃС‚РІРѕ РѕС€РёР±РѕРє Р·Р° РїРѕСЃР»РµРґРЅРёР№ С‡Р°СЃ
+N_TRSHLD      NUMBER;         --Р§РёСЃР»Рѕ СЃРѕР±С‹С‚РёР№ РґР»СЏ РѕРґРЅРѕРіРѕ РѕР±СЂР°Р±РѕС‚С‡РёРєР°
+N_NTF         NUMBER;         --Р§РёСЃР»Рѕ СЃРѕР±С‹С‚РёР№ РІ РѕС‡РµСЂРµРґРё
+N_STEP        NUMBER;         --Р§РёСЃР»Рѕ РїР°СЂР°Р»Р»РµР»СЊРЅС‹С… РѕР±СЂР°Р±РѕС‚С‡РёРєРѕРІ
+AQ_PRL_PRC_ST VARCHAR(30);    --Р РµР·СѓР»СЊС‚Р°С‚ РІС‹РїРѕР»РЅРµРЅРёСЏ РїСЂРѕС†РґСѓСЂС‹  
+PRG_CNT       NUMBER;         --РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕРіСЂР°РјРј СЃРѕР·РґР°РЅРЅС‹С… AQ_PRL_PRC
 BEGIN 
-  --Проверка состояния jobe AQ_JOB
+  --РџСЂРѕРІРµСЂРєР° СЃРѕСЃС‚РѕСЏРЅРёСЏ jobe AQ_JOB
   SELECT 
         j.ENABLED INTO AQ_JOB_ST 
   FROM user_scheduler_jobs j
   WHERE j.job_name = 'AQ_JOB';
-  DBMS_OUTPUT.PUT_LINE('Проверка состояния jobe AQ_JOB: '||AQ_JOB_ST||chr(13));
-  --Количество ошибок за последний час
+  DBMS_OUTPUT.PUT_LINE('РџСЂРѕРІРµСЂРєР° СЃРѕСЃС‚РѕСЏРЅРёСЏ jobe AQ_JOB: '||AQ_JOB_ST||chr(13));
+  --РљРѕР»РёС‡РµСЃС‚РІРѕ РѕС€РёР±РѕРє Р·Р° РїРѕСЃР»РµРґРЅРёР№ С‡Р°СЃ
   SELECT SUM(DECODE(l.STATUS,'FAILED',1,0)) INTO FAIL_LST_HR       
   FROM all_scheduler_job_log l,
        all_scheduler_job_run_details rd
   WHERE l.LOG_ID = rd.LOG_ID
         AND l.OWNER = 'AQ_USER'  
         AND l.LOG_DATE >= SYSDATE - 1/24;
-  DBMS_OUTPUT.PUT_LINE('Количество ошибок за последний час(all_scheduler_job_run_details): '||FAIL_LST_HR||chr(13));      
+  DBMS_OUTPUT.PUT_LINE('РљРѕР»РёС‡РµСЃС‚РІРѕ РѕС€РёР±РѕРє Р·Р° РїРѕСЃР»РµРґРЅРёР№ С‡Р°СЃ(all_scheduler_job_run_details): '||FAIL_LST_HR||chr(13));      
   SELECT pa.DEFAULT_VALUE INTO N
   FROM user_scheduler_program_args pa
   WHERE pa.PROGRAM_NAME = 'AQ_PROGRAM_START'
         AND pa.ARGUMENT_NAME = 'N';
   N_TST := round(dbms_random.VALUE(1000000,9999999));      
-  --Цикл создания событий
-  DBMS_OUTPUT.PUT_LINE('Цикл проверки корректности выполнения процеруды AQ_ENQUEUE'||chr(13));   
+  --Р¦РёРєР» СЃРѕР·РґР°РЅРёСЏ СЃРѕР±С‹С‚РёР№
+  DBMS_OUTPUT.PUT_LINE('Р¦РёРєР» РїСЂРѕРІРµСЂРєРё РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РІС‹РїРѕР»РЅРµРЅРёСЏ РїСЂРѕС†РµСЂСѓРґС‹ AQ_ENQUEUE'||chr(13));   
   FOR i IN(
            SELECT 1 id, 1 TP, N     DURATION, 'test_'||N_TST||1 TEXT FROM DUAL UNION ALL
            SELECT 2 id, 1 TP, N + 1 DURATION, 'test_'||N_TST||2 TEXT FROM DUAL UNION ALL
@@ -47,61 +47,61 @@ BEGIN
   LOOP
       RES := AQ_ENQUEUE(
                         ATT => AQ_ENQUEUE_TYPE(
-                                                   TP => i.TP, -- 1-Уведомление, 2-Подтверждение, 3-Предупреждение
+                                                   TP => i.TP, -- 1-РЈРІРµРґРѕРјР»РµРЅРёРµ, 2-РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ, 3-РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ
                                                    DTIME => SYSDATE,
                                                    DURATION => i.DURATION,
                                                    TEXT => i.TEXT
                                                   )                             
                        );
       ID := REPLACE(REGEXP_SUBSTR(RES,'ID=.*'),'ID=','');
-      DBMS_OUTPUT.PUT_LINE('i: '||i.ID||' Генерация события с параметрами: ID='||ID||' TP='||i.TP||' DURATION='||i.DURATION||' TEXT='||i.TEXT);
+      DBMS_OUTPUT.PUT_LINE('i: '||i.ID||' Р“РµРЅРµСЂР°С†РёСЏ СЃРѕР±С‹С‚РёСЏ СЃ РїР°СЂР°РјРµС‚СЂР°РјРё: ID='||ID||' TP='||i.TP||' DURATION='||i.DURATION||' TEXT='||i.TEXT);
      
-      --Проверка корректности создания события в AQ_TAB
-      SELECT DECODE(COUNT(*),1,'Успех','Ошибка') INTO CNT
+      --РџСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё СЃРѕР·РґР°РЅРёСЏ СЃРѕР±С‹С‚РёСЏ РІ AQ_TAB
+      SELECT DECODE(COUNT(*),1,'РЈСЃРїРµС…','РћС€РёР±РєР°') INTO CNT
       FROM AQ_TAB t
       WHERE t.user_data.id = ID
             AND t.user_data.text = i.TEXT;
-      DBMS_OUTPUT.PUT_LINE('Запись в таблицу AQ_TAB: '||CNT); 
+      DBMS_OUTPUT.PUT_LINE('Р—Р°РїРёСЃСЊ РІ С‚Р°Р±Р»РёС†Сѓ AQ_TAB: '||CNT); 
   END LOOP;  
   
-  Dbms_Lock.sleep(INTRVL); --Ожидание выполнения jobe
+  Dbms_Lock.sleep(INTRVL); --РћР¶РёРґР°РЅРёРµ РІС‹РїРѕР»РЅРµРЅРёСЏ jobe
   
---Проверка корректности выполнения процеруды AQ_PRL_PRC 
+--РџСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РІС‹РїРѕР»РЅРµРЅРёСЏ РїСЂРѕС†РµСЂСѓРґС‹ AQ_PRL_PRC 
 
   SELECT pa.DEFAULT_VALUE INTO N_TRSHLD
   FROM user_scheduler_program_args pa
   WHERE pa.PROGRAM_NAME = 'AQ_PROGRAM_START'
         AND pa.ARGUMENT_NAME = 'N_TRSHLD';
-  --Определение количества событий
+  --РћРїСЂРµРґРµР»РµРЅРёРµ РєРѕР»РёС‡РµСЃС‚РІР° СЃРѕР±С‹С‚РёР№
   SELECT GREATEST(COUNT(*),MAX(t.user_data.id)) INTO N_NTF
   FROM AQ_TAB t;  
 
-  Dbms_Lock.sleep(INTRVL); --Ожидание 2-го циклоа выполнения jobe, т.к. созданные события предупрежденя обрабатываются при следующем запуске job  
+  Dbms_Lock.sleep(INTRVL); --РћР¶РёРґР°РЅРёРµ 2-РіРѕ С†РёРєР»РѕР° РІС‹РїРѕР»РЅРµРЅРёСЏ jobe, С‚.Рє. СЃРѕР·РґР°РЅРЅС‹Рµ СЃРѕР±С‹С‚РёСЏ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅСЏ РѕР±СЂР°Р±Р°С‚С‹РІР°СЋС‚СЃСЏ РїСЂРё СЃР»РµРґСѓСЋС‰РµРј Р·Р°РїСѓСЃРєРµ job  
 
   IF N_NTF>0 THEN    
-    --Расчет необходимого количества обработчиков N_STEP
+    --Р Р°СЃС‡РµС‚ РЅРµРѕР±С…РѕРґРёРјРѕРіРѕ РєРѕР»РёС‡РµСЃС‚РІР° РѕР±СЂР°Р±РѕС‚С‡РёРєРѕРІ N_STEP
     N_STEP := CEIL(N_NTF/N_TRSHLD);
-    --Количество программ созданных AQ_PRL_PRC
+    --РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕРіСЂР°РјРј СЃРѕР·РґР°РЅРЅС‹С… AQ_PRL_PRC
     SELECT COUNT(*) INTO PRG_CNT
     FROM user_scheduler_programs p
     WHERE p.PROGRAM_NAME LIKE 'AQ_PROGRAM_%'
           AND p.PROGRAM_NAME <> 'AQ_PROGRAM_START'; 
     IF PRG_CNT > 0 THEN     
        IF PRG_CNT = N_STEP THEN
-          AQ_PRL_PRC_ST := 'Успех';   
+          AQ_PRL_PRC_ST := 'РЈСЃРїРµС…';   
        ELSE 
-          AQ_PRL_PRC_ST := 'Ошибка';  
+          AQ_PRL_PRC_ST := 'РћС€РёР±РєР°';  
        END IF; 
     ELSE
-       AQ_PRL_PRC_ST := 'Количество программ созданных AQ_PRL_PRC = 0';     
+       AQ_PRL_PRC_ST := 'РљРѕР»РёС‡РµСЃС‚РІРѕ РїСЂРѕРіСЂР°РјРј СЃРѕР·РґР°РЅРЅС‹С… AQ_PRL_PRC = 0';     
     END IF;
   ELSE 
-    AQ_PRL_PRC_ST := 'Нет событий в очереди';               
+    AQ_PRL_PRC_ST := 'РќРµС‚ СЃРѕР±С‹С‚РёР№ РІ РѕС‡РµСЂРµРґРё';               
   END IF;
-  DBMS_OUTPUT.PUT_LINE(chr(13)||'Проверка корректности выполнения процеруды AQ_PRL_PRC: '||AQ_PRL_PRC_ST); 
+  DBMS_OUTPUT.PUT_LINE(chr(13)||'РџСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РІС‹РїРѕР»РЅРµРЅРёСЏ РїСЂРѕС†РµСЂСѓРґС‹ AQ_PRL_PRC: '||AQ_PRL_PRC_ST); 
         
---Цикл проверки корректности выполнения процеруды AQ_DEQUEUE
-  DBMS_OUTPUT.PUT_LINE(chr(13)||'Цикл проверки корректности выполнения процеруды AQ_DEQUEUE'||chr(13));       
+--Р¦РёРєР» РїСЂРѕРІРµСЂРєРё РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РІС‹РїРѕР»РЅРµРЅРёСЏ РїСЂРѕС†РµСЂСѓРґС‹ AQ_DEQUEUE
+  DBMS_OUTPUT.PUT_LINE(chr(13)||'Р¦РёРєР» РїСЂРѕРІРµСЂРєРё РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РІС‹РїРѕР»РЅРµРЅРёСЏ РїСЂРѕС†РµСЂСѓРґС‹ AQ_DEQUEUE'||chr(13));       
   FOR i IN(
            SELECT 1 id, 1 TP, N     DURATION, 'test_'||N_TST||1 TEXT FROM DUAL UNION ALL
            SELECT 2 id, 1 TP, N + 1 DURATION, 'test_'||N_TST||2 TEXT FROM DUAL UNION ALL
@@ -111,19 +111,19 @@ BEGIN
           )
   LOOP
       DBMS_OUTPUT.PUT_LINE('i: '||i.ID);
- --Проверка корректности добавления записи в таблицу AQ_CONFIRM
+ --РџСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё РІ С‚Р°Р±Р»РёС†Сѓ AQ_CONFIRM
       IF i.TP = 2 THEN
-          SELECT DECODE(COUNT(*),1,'Успех','Ошибка') INTO CNT
+          SELECT DECODE(COUNT(*),1,'РЈСЃРїРµС…','РћС€РёР±РєР°') INTO CNT
           FROM AQ_CONFIRM t
           WHERE t.text = i.TEXT;
-          DBMS_OUTPUT.PUT_LINE('Запись в таблицу AQ_CONFIRM: '||CNT);     
+          DBMS_OUTPUT.PUT_LINE('Р—Р°РїРёСЃСЊ РІ С‚Р°Р±Р»РёС†Сѓ AQ_CONFIRM: '||CNT);     
       END IF;    
-  --Проверка корректности добавления записи в таблицу AQ_WARN
+  --РџСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё РІ С‚Р°Р±Р»РёС†Сѓ AQ_WARN
       IF i.TP = 3 OR i.DURATION > N THEN
-          SELECT DECODE(COUNT(*),1,'Успех','Ошибка') INTO CNT
+          SELECT DECODE(COUNT(*),1,'РЈСЃРїРµС…','РћС€РёР±РєР°') INTO CNT
           FROM AQ_WARN t
           WHERE t.text = i.TEXT;
-          DBMS_OUTPUT.PUT_LINE('Запись в таблицу AQ_WARN: '||CNT);     
+          DBMS_OUTPUT.PUT_LINE('Р—Р°РїРёСЃСЊ РІ С‚Р°Р±Р»РёС†Сѓ AQ_WARN: '||CNT);     
       END IF;       
   END LOOP;
 END;
