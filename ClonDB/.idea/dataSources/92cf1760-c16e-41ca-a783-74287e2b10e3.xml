@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="DB_MAIN">
+  <database-model serializer="dbm" rdbms="ORACLE" format-version="4.7">
+    <root id="1"/>
+    <schema id="2" parent="1" name="CB">
+      <ObjectId>107</ObjectId>
+      <IntrospectionTimestamp>2018-09-16.20:13:36</IntrospectionTimestamp>
+      <CreatedTimestamp>2018-09-16.01:08:24</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.20:08:43</ModifiedTimestamp>
+      <CommentsHash>110550640187619</CommentsHash>
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="PUBLIC">
+      <ObjectId>1</ObjectId>
+    </schema>
+    <schema id="4" parent="1" name="SYS">
+      <ObjectId>0</ObjectId>
+    </schema>
+    <schema id="5" parent="1" name="AUDSYS">
+      <ObjectId>8</ObjectId>
+    </schema>
+    <schema id="6" parent="1" name="SYSTEM">
+      <ObjectId>9</ObjectId>
+    </schema>
+    <schema id="7" parent="1" name="OUTLN">
+      <ObjectId>13</ObjectId>
+    </schema>
+    <schema id="8" parent="1" name="GSMADMIN_INTERNAL">
+      <ObjectId>21</ObjectId>
+    </schema>
+    <schema id="9" parent="1" name="GSMUSER">
+      <ObjectId>22</ObjectId>
+    </schema>
+    <schema id="10" parent="1" name="DIP">
+      <ObjectId>23</ObjectId>
+    </schema>
+    <schema id="11" parent="1" name="REMOTE_SCHEDULER_AGENT">
+      <ObjectId>34</ObjectId>
+    </schema>
+    <schema id="12" parent="1" name="DBSFWUSER">
+      <ObjectId>35</ObjectId>
+    </schema>
+    <schema id="13" parent="1" name="ORACLE_OCM">
+      <ObjectId>39</ObjectId>
+    </schema>
+    <schema id="14" parent="1" name="SYS$UMF">
+      <ObjectId>46</ObjectId>
+    </schema>
+    <schema id="15" parent="1" name="DBSNMP">
+      <ObjectId>54</ObjectId>
+    </schema>
+    <schema id="16" parent="1" name="APPQOSSYS">
+      <ObjectId>55</ObjectId>
+    </schema>
+    <schema id="17" parent="1" name="GSMCATUSER">
+      <ObjectId>59</ObjectId>
+    </schema>
+    <schema id="18" parent="1" name="GGSYS">
+      <ObjectId>60</ObjectId>
+    </schema>
+    <schema id="19" parent="1" name="XDB">
+      <ObjectId>62</ObjectId>
+    </schema>
+    <schema id="20" parent="1" name="ANONYMOUS">
+      <ObjectId>63</ObjectId>
+    </schema>
+    <schema id="21" parent="1" name="WMSYS">
+      <ObjectId>72</ObjectId>
+    </schema>
+    <schema id="22" parent="1" name="OJVMSYS">
+      <ObjectId>81</ObjectId>
+    </schema>
+    <schema id="23" parent="1" name="CTXSYS">
+      <ObjectId>84</ObjectId>
+    </schema>
+    <schema id="24" parent="1" name="ORDSYS">
+      <ObjectId>86</ObjectId>
+    </schema>
+    <schema id="25" parent="1" name="ORDDATA">
+      <ObjectId>87</ObjectId>
+    </schema>
+    <schema id="26" parent="1" name="ORDPLUGINS">
+      <ObjectId>88</ObjectId>
+    </schema>
+    <schema id="27" parent="1" name="SI_INFORMTN_SCHEMA">
+      <ObjectId>89</ObjectId>
+    </schema>
+    <schema id="28" parent="1" name="MDSYS">
+      <ObjectId>90</ObjectId>
+    </schema>
+    <schema id="29" parent="1" name="OLAPSYS">
+      <ObjectId>93</ObjectId>
+    </schema>
+    <schema id="30" parent="1" name="MDDATA">
+      <ObjectId>96</ObjectId>
+    </schema>
+    <schema id="31" parent="1" name="SPATIAL_CSW_ADMIN_USR">
+      <ObjectId>98</ObjectId>
+    </schema>
+    <schema id="32" parent="1" name="LBACSYS">
+      <ObjectId>101</ObjectId>
+    </schema>
+    <schema id="33" parent="1" name="DVF">
+      <ObjectId>103</ObjectId>
+    </schema>
+    <schema id="34" parent="1" name="LEYMAN">
+      <ObjectId>106</ObjectId>
+    </schema>
+    <schema id="35" parent="1" name="DVSYS">
+      <ObjectId>1279990</ObjectId>
+    </schema>
+    <schema id="36" parent="1" name="SYSBACKUP">
+      <ObjectId>2147483617</ObjectId>
+    </schema>
+    <schema id="37" parent="1" name="SYSDG">
+      <ObjectId>2147483618</ObjectId>
+    </schema>
+    <schema id="38" parent="1" name="SYSKM">
+      <ObjectId>2147483619</ObjectId>
+    </schema>
+    <schema id="39" parent="1" name="SYSRAC">
+      <ObjectId>2147483620</ObjectId>
+    </schema>
+    <schema id="40" parent="1" name="XS$NULL">
+      <ObjectId>2147483638</ObjectId>
+    </schema>
+    <sequence id="41" parent="2" name="CUR_RATES_CB_ID_SEQ">
+      <ObjectId>73350</ObjectId>
+      <CreatedTimestamp>2018-09-16.01:08:25</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <SequenceIdentity>1</SequenceIdentity>
+    </sequence>
+    <sequence id="42" parent="2" name="LOG_ID_SEQ">
+      <ObjectId>73355</ObjectId>
+      <CreatedTimestamp>2018-09-16.01:08:25</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <SequenceIdentity>1</SequenceIdentity>
+    </sequence>
+    <table id="43" parent="2" name="CUR_LIST">
+      <ObjectId>73345</ObjectId>
+      <Comment>Таблица с описанием валют</Comment>
+      <CreatedTimestamp>2018-09-16.01:08:24</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:24</ModifiedTimestamp>
+      <TemporaryPreserve>1</TemporaryPreserve>
+    </table>
+    <table id="44" parent="2" name="CUR_RATES_CB">
+      <ObjectId>73347</ObjectId>
+      <Comment>Таблица с курами валют ЦБ</Comment>
+      <CreatedTimestamp>2018-09-16.01:08:25</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <TemporaryPreserve>1</TemporaryPreserve>
+    </table>
+    <table id="45" parent="2" name="JOB_PARAMS">
+      <ObjectId>73357</ObjectId>
+      <Comment>Таблица с настройками для заданий</Comment>
+      <CreatedTimestamp>2018-09-16.01:08:25</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <TemporaryPreserve>1</TemporaryPreserve>
+      <Organization>I</Organization>
+    </table>
+    <table id="46" parent="2" name="LOG">
+      <ObjectId>73352</ObjectId>
+      <Comment>Таблица с логами</Comment>
+      <CreatedTimestamp>2018-09-16.01:08:25</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <TemporaryPreserve>1</TemporaryPreserve>
+    </table>
+    <package id="47" parent="2" name="CUR_PKG">
+      <ObjectId>73363</ObjectId>
+      <DependsOnIds>73345</DependsOnIds>
+      <CreatedTimestamp>2018-09-16.01:08:26</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:26</ModifiedTimestamp>
+    </package>
+    <package id="48" parent="2" name="HTTP_UTL">
+      <ObjectId>73361</ObjectId>
+      <CreatedTimestamp>2018-09-16.01:08:26</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:26</ModifiedTimestamp>
+    </package>
+    <package id="49" parent="2" name="LOG_PKG">
+      <ObjectId>73359</ObjectId>
+      <CreatedTimestamp>2018-09-16.01:08:25</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+    </package>
+    <package id="50" parent="2" name="SCHEDULER_PKG">
+      <ObjectId>73365</ObjectId>
+      <DependsOnIds>73357</DependsOnIds>
+      <CreatedTimestamp>2018-09-16.01:08:26</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:26</ModifiedTimestamp>
+    </package>
+    <column id="51" parent="43" name="CB_CODE">
+      <Position>1</Position>
+      <Comment>CB-код валюты</Comment>
+      <DataType>VARCHAR2(10 byte)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="52" parent="43" name="CB_PARENT_CODE">
+      <Position>2</Position>
+      <Comment>Ссылка на родительский CB-код валюты</Comment>
+      <DataType>VARCHAR2(10 byte)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="53" parent="43" name="ISO_NUM_CODE">
+      <Position>3</Position>
+      <Comment>Цифровой ISO-код валюты</Comment>
+      <DataType>NUMBER(3 digit)|0s</DataType>
+    </column>
+    <column id="54" parent="43" name="ISO_CHAR_CODE">
+      <Position>4</Position>
+      <Comment>Символьный ISO-код валюты</Comment>
+      <DataType>VARCHAR2(3 byte)|0s</DataType>
+    </column>
+    <column id="55" parent="43" name="NAME">
+      <Position>5</Position>
+      <Comment>Название валюты</Comment>
+      <DataType>VARCHAR2(100 byte)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="56" parent="43" name="ENG_NAME">
+      <Position>6</Position>
+      <Comment>Currency name</Comment>
+      <DataType>VARCHAR2(100 byte)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="57" parent="43" name="NOMINAL">
+      <Position>7</Position>
+      <Comment>Номинал валюты для отображения курса</Comment>
+      <DataType>NUMBER(*)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="58" parent="43" name="CUR_LIST_CB_CODE_PK">
+      <ObjectId>73346</ObjectId>
+      <CreatedTimestamp>2018-09-16.01:08:24</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:24</ModifiedTimestamp>
+      <TablespaceName>USERS</TablespaceName>
+      <ColNames>CB_CODE</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="59" parent="43" name="CUR_LIST_CB_CODE_PK">
+      <ModifiedTimestamp>2018-09-16.01:08:24</ModifiedTimestamp>
+      <ColNames>CB_CODE</ColNames>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <UnderlyingIndexName>CUR_LIST_CB_CODE_PK</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <check id="60" parent="43" name="CUR_LIST_CB_PARENT_CODE_NN">
+      <ModifiedTimestamp>2018-09-16.01:08:24</ModifiedTimestamp>
+      <ColNames>CB_PARENT_CODE</ColNames>
+      <Predicate>&quot;CB_PARENT_CODE&quot; IS NOT NULL</Predicate>
+    </check>
+    <check id="61" parent="43" name="CUR_LIST_NAME_NN">
+      <ModifiedTimestamp>2018-09-16.01:08:24</ModifiedTimestamp>
+      <ColNames>NAME</ColNames>
+      <Predicate>&quot;NAME&quot; IS NOT NULL</Predicate>
+    </check>
+    <check id="62" parent="43" name="CUR_LIST_ENG_NAME_NN">
+      <ModifiedTimestamp>2018-09-16.01:08:24</ModifiedTimestamp>
+      <ColNames>ENG_NAME</ColNames>
+      <Predicate>&quot;ENG_NAME&quot; IS NOT NULL</Predicate>
+    </check>
+    <check id="63" parent="43" name="CUR_LIST_NOMINAL_NN">
+      <ModifiedTimestamp>2018-09-16.01:08:24</ModifiedTimestamp>
+      <ColNames>NOMINAL</ColNames>
+      <Predicate>&quot;NOMINAL&quot; IS NOT NULL</Predicate>
+    </check>
+    <column id="64" parent="44" name="ID">
+      <Position>1</Position>
+      <Comment>Идентификатор курса</Comment>
+      <DataType>NUMBER(*)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="65" parent="44" name="CB_CODE">
+      <Position>2</Position>
+      <Comment>Идентификатор валюты ЦБ</Comment>
+      <DataType>VARCHAR2(10 byte)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="66" parent="44" name="CUR_DATE">
+      <Position>3</Position>
+      <Comment>Дата установки курса</Comment>
+      <DataType>DATE|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="67" parent="44" name="VALUE">
+      <Position>4</Position>
+      <Comment>Значение курса для указанного номинала</Comment>
+      <DataType>NUMBER(*)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="68" parent="44" name="LOAD_DATE">
+      <Position>5</Position>
+      <Comment>Дата загрузки курса</Comment>
+      <DataType>DATE|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="69" parent="44" name="CUR_RATES_CB_ID_PK">
+      <ObjectId>73348</ObjectId>
+      <CreatedTimestamp>2018-09-16.01:08:25</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <TablespaceName>USERS</TablespaceName>
+      <ColNames>ID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="70" parent="44" name="CUR_RATES_CB_CODE_DATE_UNQ">
+      <ObjectId>73349</ObjectId>
+      <CreatedTimestamp>2018-09-16.01:08:25</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <TablespaceName>USERS</TablespaceName>
+      <ColNames>CB_CODE
+CUR_DATE</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="71" parent="44" name="CUR_RATES_CB_ID_PK">
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <ColNames>ID</ColNames>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <UnderlyingIndexName>CUR_RATES_CB_ID_PK</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <key id="72" parent="44" name="CUR_RATES_CB_CODE_DATE_UNQ">
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <ColNames>CB_CODE
+CUR_DATE</ColNames>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <UnderlyingIndexName>CUR_RATES_CB_CODE_DATE_UNQ</UnderlyingIndexName>
+    </key>
+    <foreign-key id="73" parent="44" name="CUR_RATES_CB_CODE_FK">
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <ColNames>CB_CODE</ColNames>
+      <RefSchemaName>CB</RefSchemaName>
+      <RefTableName>CUR_LIST</RefTableName>
+      <RefKeyName>CUR_LIST_CB_CODE_PK</RefKeyName>
+      <OnDelete>restrict</OnDelete>
+    </foreign-key>
+    <check id="74" parent="44" name="CUR_RATES_CB_NUM_CODE_NN">
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <ColNames>CB_CODE</ColNames>
+      <Predicate>&quot;CB_CODE&quot; IS NOT NULL</Predicate>
+    </check>
+    <check id="75" parent="44" name="CUR_RATES_CB_CUR_DATE_NN">
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <ColNames>CUR_DATE</ColNames>
+      <Predicate>&quot;CUR_DATE&quot; IS NOT NULL</Predicate>
+    </check>
+    <check id="76" parent="44" name="CUR_RATES_CB_VALUE_NN">
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <ColNames>VALUE</ColNames>
+      <Predicate>&quot;VALUE&quot; IS NOT NULL</Predicate>
+    </check>
+    <check id="77" parent="44" name="CUR_RATES_CB_LOAD_DATE_NN">
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <ColNames>LOAD_DATE</ColNames>
+      <Predicate>&quot;LOAD_DATE&quot; IS NOT NULL</Predicate>
+    </check>
+    <trigger id="78" parent="44" name="CUR_RATES_CB_ID_TRG">
+      <ObjectId>73351</ObjectId>
+      <DependsOnIds>73350</DependsOnIds>
+      <CreatedTimestamp>2018-09-16.01:08:25</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <Events>I</Events>
+      <Turn>before-row</Turn>
+    </trigger>
+    <column id="79" parent="45" name="JOB_NAME">
+      <Position>1</Position>
+      <Comment>Название задания</Comment>
+      <DataType>VARCHAR2(100 byte)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="80" parent="45" name="PNAME">
+      <Position>2</Position>
+      <Comment>Название параметра</Comment>
+      <DataType>VARCHAR2(100 byte)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="81" parent="45" name="PVALUE">
+      <Position>3</Position>
+      <Comment>Значение параметра</Comment>
+      <DataType>VARCHAR2(2000 byte)|0s</DataType>
+    </column>
+    <index id="82" parent="45" name="JOB_PARAMS_PK">
+      <ObjectId>73358</ObjectId>
+      <CreatedTimestamp>2018-09-16.01:08:25</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <TablespaceName>USERS</TablespaceName>
+      <ColNames>JOB_NAME
+PNAME</ColNames>
+      <Unique>1</Unique>
+      <Clustering>1</Clustering>
+    </index>
+    <key id="83" parent="45" name="JOB_PARAMS_PK">
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <ColNames>JOB_NAME
+PNAME</ColNames>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <UnderlyingIndexName>JOB_PARAMS_PK</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <column id="84" parent="46" name="ID">
+      <Position>1</Position>
+      <DataType>NUMBER(*)|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="85" parent="46" name="DTIME">
+      <Position>2</Position>
+      <Comment>Дата и время записи</Comment>
+      <DataType>DATE|0s</DataType>
+    </column>
+    <column id="86" parent="46" name="MODUL">
+      <Position>3</Position>
+      <Comment>Модуль от которого получено сообщение</Comment>
+      <DataType>VARCHAR2(200 byte)|0s</DataType>
+    </column>
+    <column id="87" parent="46" name="CODE">
+      <Position>4</Position>
+      <Comment>Код ошибки</Comment>
+      <DataType>VARCHAR2(100 byte)|0s</DataType>
+    </column>
+    <column id="88" parent="46" name="MESSAGE">
+      <Position>5</Position>
+      <Comment>Описание ошибки</Comment>
+      <DataType>VARCHAR2(4000 byte)|0s</DataType>
+    </column>
+    <index id="89" parent="46" name="LOG_ID_PK">
+      <ObjectId>73353</ObjectId>
+      <CreatedTimestamp>2018-09-16.01:08:25</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <TablespaceName>USERS</TablespaceName>
+      <ColNames>ID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="90" parent="46" name="LOG_D_M_IDX">
+      <ObjectId>73354</ObjectId>
+      <CreatedTimestamp>2018-09-16.01:08:25</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <TablespaceName>USERS</TablespaceName>
+      <ColNames>DTIME
+MODUL</ColNames>
+    </index>
+    <key id="91" parent="46" name="LOG_ID_PK">
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <ColNames>ID</ColNames>
+      <InitiallyDeferred>1</InitiallyDeferred>
+      <UnderlyingIndexName>LOG_ID_PK</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <trigger id="92" parent="46" name="LOG_TRG">
+      <ObjectId>73356</ObjectId>
+      <DependsOnIds>73355</DependsOnIds>
+      <CreatedTimestamp>2018-09-16.01:08:25</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:25</ModifiedTimestamp>
+      <Events>I</Events>
+      <Turn>before-row</Turn>
+    </trigger>
+    <body id="93" parent="47" name="CUR_PKG">
+      <ObjectId>73364</ObjectId>
+      <DependsOnIds>7267,7294,7295,7310,7312,73345,73347,73359,73361</DependsOnIds>
+      <CreatedTimestamp>2018-09-16.01:08:26</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:26</ModifiedTimestamp>
+    </body>
+    <routine id="94" parent="47" name="LOAD_CUR_LIST_FROM_CB">
+      <RoutineKind>function</RoutineKind>
+    </routine>
+    <routine id="95" parent="47" name="EXISTS_CUR_CB">
+      <RoutineKind>function</RoutineKind>
+    </routine>
+    <routine id="96" parent="47" name="LOAD_CUR_RATE_FROM_CB">
+      <RoutineKind>function</RoutineKind>
+    </routine>
+    <body id="97" parent="48" name="HTTP_UTL">
+      <ObjectId>73362</ObjectId>
+      <DependsOnIds>7252,7259,73359</DependsOnIds>
+      <CreatedTimestamp>2018-09-16.01:08:26</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:26</ModifiedTimestamp>
+    </body>
+    <routine id="98" parent="48" name="REQUEST">
+      <RoutineKind>function</RoutineKind>
+    </routine>
+    <body id="99" parent="49" name="LOG_PKG">
+      <ObjectId>73360</ObjectId>
+      <DependsOnIds>73352</DependsOnIds>
+      <CreatedTimestamp>2018-09-16.01:08:26</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:26</ModifiedTimestamp>
+    </body>
+    <routine id="100" parent="49" name="PUT_LOG">
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <body id="101" parent="50" name="SCHEDULER_PKG">
+      <ObjectId>73366</ObjectId>
+      <DependsOnIds>73357,73359,73363</DependsOnIds>
+      <CreatedTimestamp>2018-09-16.01:08:26</CreatedTimestamp>
+      <ModifiedTimestamp>2018-09-16.01:08:26</ModifiedTimestamp>
+    </body>
+    <routine id="102" parent="50" name="GET_PARAM_VAL">
+      <RoutineKind>function</RoutineKind>
+    </routine>
+    <routine id="103" parent="50" name="LOAD_CUR_RATE_FROM_CB">
+      <RoutineKind>procedure</RoutineKind>
+    </routine>
+    <argument id="104" parent="94">
+      <ArgumentDirection>R</ArgumentDirection>
+      <DataType>BINARY_INTEGER|0s</DataType>
+    </argument>
+    <argument id="105" parent="95">
+      <ArgumentDirection>R</ArgumentDirection>
+      <DataType>BINARY_INTEGER|0s</DataType>
+    </argument>
+    <argument id="106" parent="95" name="P$CUR_CB">
+      <Position>1</Position>
+      <DataType>VARCHAR2|0s</DataType>
+    </argument>
+    <argument id="107" parent="96">
+      <ArgumentDirection>R</ArgumentDirection>
+      <DataType>BINARY_INTEGER|0s</DataType>
+    </argument>
+    <argument id="108" parent="96" name="P$DATE_REQ1">
+      <Position>1</Position>
+      <DataType>DATE|0s</DataType>
+    </argument>
+    <argument id="109" parent="96" name="P$DATE_REQ2">
+      <Position>2</Position>
+      <DataType>DATE|0s</DataType>
+    </argument>
+    <argument id="110" parent="96" name="P$CUR_CB">
+      <Position>3</Position>
+      <DataType>VARCHAR2|0s</DataType>
+    </argument>
+    <argument id="111" parent="96" name="P$CUR_CB_LIST">
+      <Position>3</Position>
+      <DataType>VARCHAR2|0s</DataType>
+    </argument>
+    <argument id="112" parent="98">
+      <ArgumentDirection>R</ArgumentDirection>
+      <DataType>BINARY_INTEGER|0s</DataType>
+    </argument>
+    <argument id="113" parent="98" name="P$URL">
+      <Position>1</Position>
+      <DataType>VARCHAR2|0s</DataType>
+    </argument>
+    <argument id="114" parent="98" name="P$METHOD">
+      <Position>2</Position>
+      <DataType>VARCHAR2|0s</DataType>
+    </argument>
+    <argument id="115" parent="98" name="P$CHARSET">
+      <Position>3</Position>
+      <DataType>VARCHAR2|0s</DataType>
+    </argument>
+    <argument id="116" parent="98" name="P_CLOB$RESP">
+      <Position>4</Position>
+      <ArgumentDirection>M</ArgumentDirection>
+      <DataType>CLOB|0s</DataType>
+    </argument>
+    <argument id="117" parent="100" name="P$MODUL">
+      <Position>1</Position>
+      <DataType>VARCHAR2|0s</DataType>
+    </argument>
+    <argument id="118" parent="100" name="P$CODE">
+      <Position>2</Position>
+      <DataType>VARCHAR2|0s</DataType>
+    </argument>
+    <argument id="119" parent="100" name="P$MESSAGE">
+      <Position>3</Position>
+      <DataType>VARCHAR2|0s</DataType>
+    </argument>
+    <argument id="120" parent="102">
+      <ArgumentDirection>R</ArgumentDirection>
+      <DataType>VARCHAR2|0s</DataType>
+    </argument>
+    <argument id="121" parent="102" name="P$JOB_NAME">
+      <Position>1</Position>
+      <DataType>VARCHAR2|0s</DataType>
+    </argument>
+    <argument id="122" parent="102" name="P$PNAME">
+      <Position>2</Position>
+      <DataType>VARCHAR2|0s</DataType>
+    </argument>
+  </database-model>
+</dataSource>
