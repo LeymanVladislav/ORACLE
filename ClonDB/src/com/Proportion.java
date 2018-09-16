@@ -28,7 +28,7 @@ public class Proportion
     public static void GetProporties() throws IOException
     {
         Properties props = new Properties();
-        props.load(new FileInputStream(new File("config/example.ini")));
+        props.load(new FileInputStream(new File("src/config/example.ini")));
 
         if(!props.isEmpty()) {
             SOME_INT_VALUE = Integer.valueOf(props.getProperty("SOME_INT_VALUE", "1"));
